@@ -16,7 +16,21 @@ namespace MethodOverload
 
             Console.WriteLine(person.Email);
 
-            Console.WriteLine(); // WriteLine has 19 different overloads (can take nothing, bool, int, ...)
+            var employee = new EmployeeModel("Johnny", "Cash"); // set employee by name only
+
+            var employee2 = new EmployeeModel("Yuki", "Fox", "Snacks"); // set employee with department
+
+            employee.SetDeparment("Accounting"); // department can be set later if needed
+
+            employee.GenerateEmail(); // will make an email with firstname.lastname
+
+            employee2.GenerateEmail(true); // will make an email with firstname
+
+            Console.WriteLine(employee.Email);
+
+            Console.WriteLine(employee2.Email);
+
+            // Console.WriteLine(); // WriteLine has 19 different overloads (can take nothing, bool, int, ...)
             
             Console.ReadLine();
         }
@@ -103,3 +117,48 @@ public class PersonModel
 
     // Now we have 4 different methods to generate an email, based on which way we want to do it
 }
+
+public class EmployeeModel
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Department { get; set; }
+
+    public EmployeeModel(string firstName, string lastName)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+    }
+
+    public EmployeeModel(string firstName, string lastName, string department)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Department = department;
+    }
+
+    public void GenerateEmail()
+    {
+        GenerateEmail(false);
+    }
+
+    public void GenerateEmail(bool firstName)
+    {
+        if (firstName)
+        {
+            Email = $"{FirstName}@company.me";
+        }
+        else
+        {
+            Email = $"{FirstName}.{LastName}@company.me";
+        }        
+    }
+
+    public void SetDeparment(string department)
+    {
+        Department = department;
+    }
+
+}
+
